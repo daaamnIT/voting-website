@@ -6,7 +6,7 @@
 ### Технологический стек:
 - Python 3.6
 - Django 3.1+
-- HTML 5/CSS/Bootstrap 5
+- HTML 5 / CSS / Bootstrap 5
 - SQLite 3.22+
 
 ### Инструкция по настройке проекта:
