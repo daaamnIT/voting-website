@@ -1,0 +1,31 @@
+{% extends 'main/base.html' %}
+{% block title %}
+<title>Votings</title>
+{% endblock %}
+{% block content %}
+<div class="shadow-lg card jumbotron mt-3 mb-3" style="width: 50%; margin: 0 auto; border-radius: 8px">
+    <div class="card-body">
+        <h2 class="card-title text-center">Создать голосование</h2>
+        {% if error %}
+        <div class="col col-md-12 " style="text-align: center; color: darkred">
+            <p>{{ error.message }}:</p>
+            <p>{{ error.question }}</p>
+            <p>Отредактируйте или создайте новый</p>
+        </div>
+        {% endif %}
+        {% load crispy_forms_tags%}
+        <form class="form-group" action='/create_voting/' method="POST"
+              style="text-align: center; ">
+            {% csrf_token %}
+            <div>
+                {{voting_form|crispy }}
+            </div>
+            <div>
+                <button type="submit" class="btn btn-outline-dark btn-lg mt-3"
+                        style="width: 25%; border-radius: 16px; min-width: 100px">Готово
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,45 @@
+{% extends 'main/base.html' %}
+{% block title %}
+<title>Change information</title>
+{% endblock %}
+{% block content %}
+<main>
+    <div class="card jumbotron mt-3 shadow-lg mt-5 mb-5" style="width: 50%; margin: 0 auto; border-radius: 8px">
+        <div class="card-body">
+            <h2 class="card-title text-center">Изменение информации</h2>
+            <hr>
+            <div class="row">
+                <div class="col-md-12" style="color: #ff0000">
+                    {{form.errors}}
+                </div>
+            </div>
+            <div class="col-xs-1" align="center">
+                <div class="col col-6">
+                    <form action="/change_info/" method="POST">
+                        {% for field in form %}
+                        {% csrf_token %}
+                        <div class="row">
+                            <div class="col-md-12" style="margin:5px; paddin:7px; border-radius:5px">
+                                {{ field.label }}:
+                            </div>
+                            <div class="col-md-12" style="margin:5px; paddin:7px; border-radius:5px">
+                                {{ field }}
+                            </div>
+                        </div>
+                        {% endfor %}
+                        <div class="row2">
+                            <input type="submit" class="btn btn-outline-dark btn-md" name="status" value="Сохранить"
+                                   style=" border-radius: 16px; min-width: 100px; margin-top: 5%"/>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        inputGroupFile.addEventListener('change', function () {
+            chosed_file.textContent = inputGroupFile.files[0].name;
+        })
+    </script>
+</main>
+{% endblock %}

@@ -1,0 +1,152 @@
+{% extends 'main/base.html' %}
+{% block title %}
+<title>Votings</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+{% endblock %}
+{% block content %}
+<main>
+        <div class="card-body">
+            <div class="row" style="text-align: center; margin-top: 2%">
+                <div class="col-md-12">
+                  <h2 class="card-title text-center"><u>Список актуальных опросов</u></h2>
+                </div>
+            </div>
+        </div>
+    {% for voting in votings %}
+    <div class="shadow-lg card jumbotron mt-3 mb-3 border-left-dark border-right-dark" style="width: 50%; margin: 0 auto; border-radius: 8px">
+        <div class="card-body">
+            <h2 class="card-title text-center">Вопрос: {{voting.question}}</h2>
+            <div class="row">
+                <div class="col-md-12" style="padding-right: 25%; padding-left: 25%">
+                    <hr>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <p style="text-align: center">Автор: {{voting.author.username}}</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <p style="text-align: center"> Описание: {{voting.description}}</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <p style="text-align: center"> Лайки: {{voting.like_count}}</p>
+                        </div>
+                    </div>
+                    <form class="form-group" action='/available_voting/' method="POST" style="text-align: center">
+                        <button class="btn btn-outline-dark btn-block" type="button" data-toggle="collapse"
+                                data-target="#collapseExample_{{voting.id}}" aria-expanded="false"
+                                aria-controls="collapseExample">
+                            Открыть статистику
+                        </button>
+                    </form>
+                    <div class="row">
+                        <div class="col-md-12 collapse" id="collapseExample_{{voting.id}}" style="text-align: center">
+                            <div class="row card border-dark mb-3">
+                            <div class="card-body"><canvas id="myChart_{{voting.id}}"></canvas></div>
+                            </div>
+                        </div>
+                    </div>
+                    <form class="form-group" action='/available_voting/' method="POST" style="text-align: center; ">
+                        {% csrf_token %}
+                        <div class="row">
+                            <div class="col-12  mb-3">
+                                 <button type="submit" name="id" value="{{ voting.id }}" class="btn btn-outline-dark btn-block"
+                                >Пройти
+                        </button>
+                            </div>
+                            <div class="col-12">
+                                <button type="submit" name="id_advanced" value="{{ voting.id }}" class="btn btn-outline-dark btn-block"
+                                >Дополнительно
+                        </button>
+                            </div>
+                        </div>
+                    </form>
+                    {% if user.id == voting.author_id %}
+                    <form class="form-group" action='../edit_voting/' method="POST" style="text-align: center">
+                        {% csrf_token %}
+                        <div class="row">
+                            <div class="col-12">
+                                <input type="submit" class="btn btn-outline-dark btn-md btn-block" name="{{ voting.id }}" value="Отредактировать"/>
+                            </div>
+                        </div>
+                    </form>
+                    {% endif %}
+                </div>
+            <hr>
+            </div>
+        </div>
+    </div>
+    <script>
+        var ctx = document.getElementById('myChart_{{voting.id}}').getContext('2d');
+        var myChart = new Chart(ctx, {
+            type: 'pie',
+            data: {
+                labels:
+                {{voting.labels}},
+
+        datasets: [{label: '# of Votes', data: {{voting.vote_data}},
+        backgroundColor: [
+            'rgba(255, 99, 132, 0.2)',
+            'rgba(54, 162, 235, 0.2)',
+            'rgba(255, 206, 86, 0.2)',
+            'rgba(75, 192, 192, 0.2)',
+            'rgba(153, 102, 255, 0.2)',
+            'rgba(255, 159, 64, 0.2)'
+        ],
+            borderColor:
+        [
+            'rgba(255, 99, 132, 1)',
+            'rgba(54, 162, 235, 1)',
+            'rgba(255, 206, 86, 1)',
+            'rgba(75, 192, 192, 1)',
+            'rgba(153, 102, 255, 1)',
+            'rgba(255, 159, 64, 1)'
+        ],
+            borderWidth: 1
+                }]
+        },
+            options: {}
+        });
+    </script>
+    {% endfor %}
+</main>
+<div class="pagination btn-toolbar mb-3 mt-5">
+                <div class="col" role="group" align="right">
+                    <div class="btn-group" style="min-height: 100%; min-width: 50%" role="group">
+                        {% if votings.number == 1 %}
+                        <button type="button" class="btn btn-dark col" >&laquo;Первый </button>
+                        {% else %}
+                        <button type="button" class="btn btn-dark col" onclick="location.href = '?page=1'">&laquo; Первый </button>
+                        {% endif %}
+                        {% if votings.has_previous %}
+                        <button type="button" class="btn btn-dark  col" onclick="location.href = '?page={{ votings.previous_page_number }}'"> Предыдущий </button>
+                        {% else %}
+                        <button type="button" class="btn btn-dark  col"> Предыдущий </button>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="card text-white bg-dark col-md-auto">
+                    <div class="card-body ">
+                        Страница {{ votings.number }} из {{ votings.paginator.num_pages }}.
+                    </div>
+                </div>
+
+                <div class="col" role="group">
+                    <div class="btn-group" style="min-height: 100%; min-width: 50%" role="group">
+                        {% if votings.has_next %}
+                        <button type="button" class="btn btn-dark col" onclick="location.href = '?page={{ votings.next_page_number }}'"> Следующий </button>
+                        {% else %}
+                        <button type="button" class="btn btn-dark col"> Следующий </button>
+                        {% endif %}
+                        {% if votings.number == votings.paginator.num_pages %}
+                        <button type="button" class="btn btn-dark col"> Последний &raquo;</button>
+                        {% else %}
+                        <button type="button" class="btn btn-dark col" onclick="location.href = '?page={{ votings.paginator.num_pages }}'"> Последний &raquo;</button>
+                        {% endif %}
+                    </div>
+                </div>
+</div>
+{% endblock %}

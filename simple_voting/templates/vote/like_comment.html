@@ -1,0 +1,102 @@
+{% extends 'main/base.html' %}
+{% load static %}
+{% block title %}
+<title>Comment </title>
+{% endblock %}
+{% block content %}
+<main>
+    <div class="row text-center" style="margin: auto">
+        <div class="col-6 text-center">
+            {% if like_form %}
+            <div class="card jumbotron mt-3 mb-3 shadow-lg" style="width: 95%; margin: auto; border-radius: 8px">
+                <div class="card-body">
+                    <h2 class="card-title text-center">Прокомментируйте:</h2>
+                    <hr>
+                    <form action="/like_comment/" method="post">
+                        {% csrf_token %}
+                        <div class="row mt-3 text-middle">
+                            <div class="col-12">
+                                {{ comment_form.comment }}
+                            </div>
+                        </div>
+                        <div class="row mt-3" style="margin: auto; ">
+                            <div class="col-6 mt-3">
+                                <input type="submit" class="btn btn-outline-dark btn-md btn-block" name="status" value="Отправить"
+                                       />
+                            </div>
+                            <div class="col-6 text-right" style="margin: auto">
+                                <form action="/like_comment/" method="post" id="liking_form">
+                                    {% csrf_token %}
+                                    {% if liked %}
+                                    <button class="btn btn-outline-dark btn-md align-middle" type="submit" name="like" value="liked" id="like_btn">
+                                        <p>Вы лайкнули</p>
+                                    </button>
+                                    {% else %}
+                                    <button class="btn btn-outline-dark btn-md align-middle" type="submit" name="like" value="not_liked" id="like_btn">
+                                      <p>Лайкнуть</p>
+                                    </button>
+                                    {% endif %}
+                                </form>
+                                <div class="badge badge-dark text-wrap" id='like_count' style="vertical-align: bottom">{{likes_count}}</div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            {% else %}
+            <form action="/like_comment/" method="post">
+                {% csrf_token %}
+                <h3>Вы уже лайкнули это</h3>
+                <h1>Прокомментируйте:</h1>
+                {{ comment_form.as_p }}
+                <div>
+                    <input type="submit" class="btn btn-outline-success btn-md" name="status" value="Отправить"
+                           style="width: 100px; border-radius: 16px"/>
+                </div>
+            </form>
+            {% endif %}
+        </div>
+        {% if comments %}
+        <div class="col-6" >
+            {% for comment in comments %}
+            <div class="row mt-3 mr-3  border-dark" style="padding: 0;">
+                <div class="col-12 alert alert-secondary text-center shadow-lg" role="alert" >
+                    <div class="card-body">
+                        <div class="row mb-3">
+                            <div class="col-6" style="border-bottom: 1px solid lightgray">
+                                <p>{{comment.author}}</p>
+                            </div>
+                            <div class="col-6" style="border-left:1px solid lightgray; border-bottom: 1px solid lightgray">
+                                <p>{{comment.created}}</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <p class="text-break">{{comment.text}}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+    </div>
+</main>
+<script>
+    like_btn.addEventListener('click', function () {
+        if (like_btn.value == 'liked')
+        {
+            like_img.src = "{% static 'img/not_liked.png'%}";
+            like_btn.value = 'not_liked';
+            // like_count.textContent -= 1;
+        }
+        else
+        {
+            like_img.src = "{% static 'img/liked.png'%}";
+            like_btn.value = 'liked';
+            // like_count.textContent += 1;
+        }
+    })
+</script>
+{% endblock %}

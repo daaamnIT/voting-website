@@ -1,0 +1,64 @@
+{% extends 'main/base.html' %}
+{% block title %}
+<title>Generate voting</title>
+{% endblock %}
+{% block content %}
+<main>
+    <div class="container-fluid" style="overflow-x: hidden">
+        <div class="card jumbotron mt-3 mb-3 shadow-lg" style="width: 60%; margin: 0 auto; border-radius: 8px">
+            <div class="card-body">
+                <h2 class="card-title text-center">Добавление ответов</h2>
+            </div>
+            <hr>
+            <div class="row mb-2">
+                <div class="col-md-12 text-center">
+                    <h3>Вопрос: {{voting.question}}</h3>
+                </div>
+            </div>
+            <div class="row mb-2">
+                <div class="col-md-12 text-center">
+                    <h3>Описание: {{voting.description}}</h3>
+                </div>
+            </div>
+            <hr>
+            {% for opt in option_list %}
+            <div class="row mb-3">
+                <div class="col-md-12" style="text-align: center">
+                    <h3>Вариант ответа: {{opt.text}}</h3>
+                </div>
+            </div>
+            {% endfor %}
+            <hr>
+            <div class="row">
+                <div class="col-12">
+                    <form class="form-group" action='/generate_voting/' method="POST"
+                          style="text-align: center; ">
+                        {% csrf_token %}
+                        <div class="row">
+                            <div class="col-4" style="text-align: right; margin: auto auto">
+                                <h4 class="text-wrap" style="width: 100%">Добавить ответ:</h4>
+                            </div>
+                            <div class="col-6" style="; margin: auto auto">
+                                {{option.form.option}}
+                            </div>
+                            <div class="col-2" style="; margin: auto auto">
+                                <input type="submit" class="btn btn-outline-dark btn-md" name="status"
+                                       value="Добавить"/>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <form class="form-group text-center" action='../generate_voting/' method="POST">
+                {% csrf_token %}
+                <div class="row">
+                    <div class="col-md-12">
+                        <input type="submit" class="btn btn-outline-dark btn-md text-wrap" name="status"
+                               value="Сохранить"/>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</main>
+{% endblock %}

@@ -1,0 +1,79 @@
+{#{% extends 'main/base.html' %}#}
+{#{% block content %}#}
+{#  <section style="margin-top: 10%; margin-bottom: 10%">#}
+{#    <div class="container-fluid row">#}
+{#      <div class="row">#}
+{#          <p class="lead">"ZKB voting" - сервис, предоставляющий систему проведения опросов.</p>#}
+{#          <p>Здесь Вы можете:</p>#}
+{#          <div class="list-group text-left">#}
+{#              <a href="/register" class="list-group-item list-group-item-action text-success">Cоздать#}
+{#                  свой личный#}
+{#                  кабинет с актуальной#}
+{#                  информацией по вашему профилю</a>#}
+{#              <a href="/create_voting" class="list-group-item list-group-item-action text-success">Создать#}
+{#                  опрос</a>#}
+{#              <a href="/available_voting" class="list-group-item list-group-item-action text-success">Ответить#}
+{#                  на#}
+{#                  свой или опрос другого#}
+{#                  пользователя</a>#}
+{#              <a href="/other_users_review"#}
+{#                 class="list-group-item list-group-item-action text-success">Увидеть#}
+{#                  опросы отдельных пользователей и#}
+{#                  количество этих опросов</a>#}
+{#              <a href="/complain" class="list-group-item list-group-item-action text-success"#}
+{#                 aria-disabled="true">Прислать нам жалобу</a>#}
+{#          </div>#}
+{#          <p class="lead">#}
+{#              <a class="btn btn-lg btn-outline-success" href="/about_us" role="button">Узнать#}
+{#                  больше</a>#}
+{#          </p>#}
+{#        </div>#}
+{#    </div>#}
+{#  </section>#}
+{#{% endblock %}#}
+
+
+{% extends 'main/base.html' %}
+{% block title %}
+<title>About</title>
+{% endblock %}
+{% block content %}
+<main style="text-align:center;">
+    <section style="margin-top: 5%; margin-bottom: 5%; margin-left: 60%">
+        <div class="container-fluid row">
+            <div class="row">
+                <div class="col col-md-8 text-center text-md-left ml-5">
+                    <div class="shadow-lg card jumbotron">
+                        <div class="card-body">
+                            <p class="lead">"ZKB voting" - сервис, предоставляющий систему проведения опросов.</p>
+                                <p>Здесь Вы можете:</p>
+                                <div class="list-group text-left">
+                                    <a href="/register" class="list-group-item list-group-item-action text-dark">Cоздать
+                                        свой личный
+                                        кабинет с актуальной
+                                        информацией по вашему профилю</a>
+                                    <a href="/create_voting" class="list-group-item list-group-item-action text-dark">Создать
+                                        опрос</a>
+                                    <a href="/available_voting" class="list-group-item list-group-item-action text-dark">Ответить
+                                        на
+                                        свой или опрос другого
+                                        пользователя</a>
+                                    <a href="/other_users_review"
+                                       class="list-group-item list-group-item-action text-dark">Увидеть
+                                        опросы отдельных пользователей и
+                                        количество этих опросов</a>
+                                    <a href="/complain" class="list-group-item list-group-item-action text-dark"
+                                       aria-disabled="true">Прислать нам жалобу</a>
+                                </div>
+                              <p class="lead" style="margin-top: 2%">
+                                  <a class="btn btn-lg btn-outline-dark" href="/about_us" role="button">Узнать
+                                      больше о нашей команде</a>
+                              </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+{% endblock %}

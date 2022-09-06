@@ -1,0 +1,56 @@
+{% extends 'main/base.html' %}
+{% block title %}
+<title>Your complains</title>
+{% endblock %}
+{% block content %}
+<main style="min-height: 400px">
+    {% if status == "send" %}
+    <div class="shadow-lg card jumbotron mb-3 mt-3 text-center"
+         style="max-width: 50%; margin: 0 auto; border-radius: 8px; ">
+      <h2 class="card-title text-center text-dark"><u>Жалоба отправлена</u></h2>
+        <div class="row">
+            <div class="col-12">
+                <a href="../" class="btn btn-outline-dark btn-md" style="width: 50%; margin-top: 2%">На главную</a>
+                <a href="/profile" class="btn btn-outline-dark btn-md mt-3" style="width: 50%">Профиль</a>
+                <a href="/complain" class="btn btn-outline-dark btn-md mt-3 mt-3" style="width: 50%">Ещё одна жалоба</a>
+            </div>
+        </div>
+    </div>
+    {% elif status == "error" %}
+    <div class="card jumbotron border-dark mb-3 mt-3 text-center"
+         style="max-width: 50%; margin: 0 auto; border-radius: 8px">
+        <h2 class="card-title text-center" style="color: red">Error</h2>
+        <div class="row">
+            <div class="col-12">
+                <a href="" class="btn btn-outline-success btn-md" style="width: 50%">Повторить</a>
+            </div>
+        </div>
+    </div>
+    {% else %}
+    <div class="shadow-lg card jumbotron mb-3 mt-3 text-center"
+         style="max-width: 50%; margin: 0 auto; border-radius: 8px">
+        <h2 class="card-title text-center">Создайте жалобу</h2>
+        <hr>
+        <div class="card-body text-dark text-center">
+            <div class="card-text">
+                <form action="/complain/" method="post">
+                    {% csrf_token %}
+                  <label for="Your_username"><u>Ваше имя пользователя</u></label>
+                    <input class="form-control" type="text" id="Your_username" name="username" value="{{username}}">
+                    <br>
+                    <label for="Your_email"><u>Ваша электронная почта<u/></label> d
+                    <input class="form-control" type="text" id="Your_email" name="email" value="{{email}}">
+                    <br>
+                    <label for="Describe_your_problem"><u>Опишите Вашу проблему</u></label>
+                    <textarea class="form-control" type="Textarea" id="Describe_your_problem" name="complain"
+                              placeholder="Описание" rows="5" style="resize: none " required></textarea>
+                    <br>
+                    <input type="submit" class="btn btn-outline-dark btn-md" name="status" value="Отправить"
+                           style="min-width: 100px; border-radius: 16px"/>
+                </form>
+            </div>
+        </div>
+    </div>
+    {%endif%}
+</main>
+{% endblock %}

@@ -1,0 +1,51 @@
+{% extends 'main/base.html' %}
+{% block title %}
+<title>Log in</title>
+{% endblock %}
+{% block content %}
+<main>
+    <div class="card jumbotron mt-3 mb-3 shadow-lg" style="width: 25%; min-width: 300px; margin: 0 auto">
+        <div class="card-body">
+            <h2 class="card-title text-center"><u>Вход</u></h2>
+            <form action="" method="post">
+                {% csrf_token %}
+                <div class="row">
+                    <div class="col-12 text-center">
+                        {{ form.username.label }}
+                    </div>
+                    <div class="col-12 text-center">
+                        {{ form.username }}
+                    </div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-12 text-center">
+                        {{ form.password.label }}
+                    </div>
+                    <div class="col-12 text-center">
+                        {{ form.password }}
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-outline-dark btn-md btn-block mt-3">Войти</button>
+            </form>
+            <hr>
+            <div class="row mt-3">
+                <div class="col-12 text-center">
+                    <button onclick="window.location.href = '../register/';" type="button"
+                            class="btn btn-outline-dark btn-md btn-block">Еще не зарегистрированы?
+                    </button>
+                </div>
+            </div>
+            <hr>
+            <div class="row mt-3">
+                <div class="col-12 text-center">
+                    <a href="../recovery_password/" style="margin: 0">Забыли пароль?</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        id_username.classList.add('form-control')
+        id_password.classList.add('form-control')
+    </script>
+</main>
+{% endblock %}

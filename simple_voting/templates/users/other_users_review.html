@@ -1,0 +1,31 @@
+{% extends 'main/base.html' %}
+{% block title %}
+<title>Other users</title>
+{% endblock %}
+{% block content %}
+<main>
+    <div class="shadow-lg card jumbotron mt-3 mb-3 text-center" style="width: 50%; margin: 0 auto; border-radius: 8px">
+        <div class="card-body">
+          <h2 class="card-title text-center"><u>Список пользователей сайта</u></h2>
+            <hr>
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th scope="col">Пользователь</th>
+                    <th scope="col">Колличество опросов</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for item in users %}
+                <tr>
+                    <th scope="row"><a href="/user_votes_review/?voting={{ item.id }}" class="text-dark">
+                        {{ item.username }}</a></th>
+                    <td><span class="text-dark">{{ item.votes_count }}</span></td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</main>
+{% endblock %}
